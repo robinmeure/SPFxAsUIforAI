@@ -1,0 +1,27 @@
+# --- .NET (api/) ---
+bin/
+obj/
+publish/
+publish.zip
+*.user
+.vs/
+
+# --- Node / SPFx (spfx/) ---
+node_modules/
+spfx/dist/
+spfx/lib/
+spfx/lib-commonjs/
+spfx/lib-dts/
+spfx/lib-esm/
+spfx/release/
+spfx/temp/
+spfx/jest-output/
+spfx/sharepoint/solution/
+spfx/.heft/
+spfx/.inspect-package/
+*.sppkg
+npm-debug.log*
+
+# --- Editors / OS ---
+.DS_Store
+Thumbs.db

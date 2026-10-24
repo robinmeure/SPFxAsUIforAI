@@ -1,0 +1,35 @@
+{
+  "name": "hello-copilot-spfx",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "heft build",
+    "build:prod": "heft build --production",
+    "devbuild": "heft test && heft package-solution",
+    "start": "heft start",
+    "package": "heft package-solution --production",
+    "clean": "heft clean"
+  },
+  "dependencies": {
+    "@fluentui/react-components": "^9.72.0",
+    "@fluentui/react-icons": "^2.0.344",
+    "@microsoft/sp-component-base": "1.23.2",
+    "@microsoft/sp-core-library": "1.23.2",
+    "@microsoft/sp-http-base": "1.23.2",
+    "@microsoft/sp-property-pane": "1.23.2",
+    "@microsoft/sp-webpart-base": "1.23.2",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-markdown": "^8.0.7",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@microsoft/spfx-heft-plugins": "~1.23.2",
+    "@microsoft/spfx-web-build-rig": "~1.23.2",
+    "@rushstack/heft": "^1.1.5",
+    "@types/react": "17.0.90",
+    "@types/react-dom": "17.0.26",
+    "typescript": "~5.8.3"
+  },
+  "engines": { "node": ">=22.0.0 <23.0.0" }
+}

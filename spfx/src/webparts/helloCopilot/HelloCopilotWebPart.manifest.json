@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "f4c41a4f-b0a7-4d3c-bb25-8457a9fd0a68",
+  "alias": "HelloCopilotWebPart",
+  "componentType": "WebPart",
+  "version": "*",
+  "manifestVersion": 2,
+  "requiresCustomScript": false,
+  "supportedHosts": ["SharePointWebPart", "TeamsTab", "TeamsPersonalApp"],
+  "supportsThemeVariants": true,
+  "preconfiguredEntries": [{
+    "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+    "group": { "default": "Other" },
+    "title": { "default": "Hello Copilot" },
+    "description": { "default": "Streaming mock chat API sample" },
+    "officeFabricIconFontName": "Chat",
+    "properties": { "apiUrl": "https://localhost:7198/api/messages/stream", "apiScope": "api://1c389841-5b43-4575-8acb-8135d21ca809/access_as_user", "apiResource": "api://1c389841-5b43-4575-8acb-8135d21ca809" }
+  }]
+}

@@ -1,0 +1,5 @@
+{
+  "extends": "./node_modules/@microsoft/spfx-web-build-rig/profiles/default/tsconfig-base.json",
+  "compilerOptions": { "rootDir": "src", "outDir": "lib", "jsx": "react", "esModuleInterop": true },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}

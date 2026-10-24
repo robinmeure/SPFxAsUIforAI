@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "hello-copilot-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/helloCopilot/HelloCopilotWebPart.js",
+          "manifest": "./src/webparts/helloCopilot/HelloCopilotWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {}
+}

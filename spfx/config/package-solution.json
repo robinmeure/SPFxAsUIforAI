@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "hello-copilot-client-side-solution",
+    "id": "64e67e8d-55cb-4dd0-a09b-a3be5db9b612",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "webApiPermissionRequests": [
+      {
+        "resource": "Hello Copilot Mock API",
+        "scope": "access_as_user"
+      }
+    ],
+    "developer": {
+      "name": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "websiteUrl": "",
+      "mpnId": ""
+    }
+  },
+  "paths": { "zippedPackage": "solution/hello-copilot.sppkg" }
+}
