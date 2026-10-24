@@ -27,7 +27,7 @@ public sealed class MessagesTests
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Equal("text/event-stream", response.Content.Headers.ContentType?.MediaType);
-        Assert.Contains("Searching parliamentary questions", stream);
+        Assert.Contains("Searching..", stream);
         Assert.Contains("Grounded answer [1]", stream);
         Assert.Contains("Sources", stream);
         Assert.Contains("Housing", stream);
@@ -37,7 +37,7 @@ public sealed class MessagesTests
         Assert.Equal("gpt-6.1-sol", request.RootElement.GetProperty("model").GetString());
         Assert.False(request.RootElement.GetProperty("store").GetBoolean());
         Assert.True(request.RootElement.GetProperty("stream").GetBoolean());
-        Assert.Contains("Indexed evidence", request.RootElement.GetProperty("input").ToString());
+        Assert.Contains("Retrieved sources", request.RootElement.GetProperty("input").ToString());
         using var search = JsonDocument.Parse(Assert.IsType<string>(factory.Search.Body));
         Assert.Equal("semantic", search.RootElement.GetProperty("queryType").GetString());
         Assert.Equal("contentVector", search.RootElement.GetProperty("vectorQueries")[0].GetProperty("fields").GetString());

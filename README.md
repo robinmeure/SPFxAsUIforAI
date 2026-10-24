@@ -371,7 +371,7 @@ Set it to `false` after troubleshooting; do not share unredacted authentication 
 
 ## 7. Configure and deploy the API
 
-The API uses controllers and an injectable chat service. By default it retrieves parliamentary questions with Azure AI Search hybrid/semantic search and streams grounded answers through Foundry's Responses API. See the [API setup](./api/README.md) for configuration, identity permissions and the independent `UseMockResponses` switch. The SSE contract is unchanged: `{ "activity": "Searching documents" }` events for progress, `{ "text": "..." }` chunks for the answer, `{ "error": "..." }` on failure, and `[DONE]` on success.
+The API uses controllers and an injectable chat service. By default it retrieves search results with Azure AI Search hybrid/semantic search and streams grounded answers through Foundry's Responses API. See the [API setup](./api/README.md) for configuration, identity permissions and the independent `UseMockResponses` switch. The SSE contract is unchanged: `{ "activity": "Searching documents" }` events for progress, `{ "text": "..." }` chunks for the answer, `{ "error": "..." }` on failure, and `[DONE]` on success.
 
 1. **Host it** on Azure App Service. Example (adjust names; check supported runtimes with `az webapp list-runtimes`):
 
