@@ -29,7 +29,7 @@ The rest of this README is the runbook: build, theme, register, deploy and verif
 |---|---|
 | [spfx/](./spfx) | The web part (SPFx 1.23.2, Heft, React 17, Fluent UI v9) |
 | [api/](./api) | .NET 10 controllers, Azure AI Search + Foundry RAG, selectable mock, SSE streaming, CORS, Microsoft.Identity.Web |
-| [docs/research/](./docs/research/spfx-teams-chat-webpart.md) | Sourced research behind these choices, including open questions. See also [Teams iframe tab vs. SPFx](./docs/research/teams-iframe-tab-vs-spfx.md) for the manifest-pointed tab alternative and Copilot reach |
+| [docs/research/](./docs/research/spfx-teams-chat-webpart.md) | Sourced research behind these choices, including open questions. See also [Teams iframe tab vs. SPFx](./docs/research/teams-iframe-tab-vs-spfx.md) for the manifest-pointed tab alternative and Copilot reach, and [private backend access](./docs/research/private-backend-teams-sharepoint.md) for networking options from Teams and SharePoint |
 
 ## Contents
 
