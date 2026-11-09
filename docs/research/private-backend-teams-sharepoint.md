@@ -21,12 +21,12 @@ Paths are relative to this file.
 
 | Fact | Source |
 |---|---|
-| The browser calls `POST /api/messages/stream` with `fetch`, sending `Authorization`, JSON, `Accept: text/event-stream` and an `AbortSignal`, then reads the SSE body. | [`HelloCopilot.tsx`](../../spfx/src/webparts/helloCopilot/components/HelloCopilot.tsx) (`streamReply`, about line 64 onward) |
-| The property pane exposes `apiUrl`, `apiResource` and `apiScope`. The API README says `apiScope` is informational and the token request actually uses `apiResource`. | [`HelloCopilotWebPart.ts`](../../spfx/src/webparts/helloCopilot/HelloCopilotWebPart.ts), [`api/README.md`](../../api/README.md) |
-| CORS runs before authentication, with an exact origin list. The `access_as_user` scope policy is enforced. | [`Program.cs`](../../api/Program.cs) |
-| Each SSE event is flushed. The response sets `no-cache` and `X-Accel-Buffering: no`, ends with `[DONE]`, and passes the `CancellationToken` down to the service. There is no periodic heartbeat. | [`MessagesController.cs`](../../api/Controllers/MessagesController.cs) |
+| The browser calls `POST /api/messages/stream` with `fetch`, sending `Authorization`, JSON, `Accept: text/event-stream` and an `AbortSignal`, then reads the SSE body. | [`HelloCopilot.tsx`](../../src/frontend/spfx/src/webparts/helloCopilot/components/HelloCopilot.tsx) (`streamReply`, about line 64 onward) |
+| The property pane exposes `apiUrl`, `apiResource` and `apiScope`. The API README says `apiScope` is informational and the token request actually uses `apiResource`. | [`HelloCopilotWebPart.ts`](../../src/frontend/spfx/src/webparts/helloCopilot/HelloCopilotWebPart.ts), [`src/backend/api/README.md`](../../src/backend/api/README.md) |
+| CORS runs before authentication, with an exact origin list. The `access_as_user` scope policy is enforced. | [`Program.cs`](../../src/backend/api/Program.cs) |
+| Each SSE event is flushed. The response sets `no-cache` and `X-Accel-Buffering: no`, ends with `[DONE]`, and passes the `CancellationToken` down to the service. There is no periodic heartbeat. | [`MessagesController.cs`](../../src/backend/api/Controllers/MessagesController.cs) |
 | The runbook hosts on Azure App Service. Section 7.3 says to inspect the actual `Origin` in each host rather than assuming `teams.microsoft.com`. | [`README.md`](../../README.md) sections 7 and 7.3 |
-| Search and Azure OpenAI use normal HTTPS FQDNs, and private-link DNS normally preserves those names. | `api/appsettings*.json` (Rag section) |
+| Search and Azure OpenAI use normal HTTPS FQDNs, and private-link DNS normally preserves those names. | `src/backend/api/appsettings*.json` (Rag section) |
 
 **Existing web part instances keep their saved properties.** Changing manifest defaults for `apiUrl`, `apiResource` or `apiScope` does not reconfigure web parts already added to a page. Existing instances keep their saved values. After any API URL or audience change, edit each placed instance (or re-add it) and verify.
 
@@ -151,9 +151,9 @@ Mostly configuration; no code change is requested here.
 
 1. **`apiUrl`**: point at the APIM gateway URL, whether private (3.1) or public (3.2). Update the saved properties on every placed web part (see section 2).
 2. **`apiResource` and API audience: retain both.** `apiResource` is the token resource (the Application ID URI used when requesting the token); `apiScope` is informational. The current API validates the bare-client-ID v2 audience. Keep the existing `apiResource` value and the API's accepted audience unchanged. Configure APIM JWT validation to accept that same audience and enforce the delegated scope as described in section 3.2; leave the API's validation in place.
-3. **CORS**: the exact allowed origins in [`Program.cs`](../../api/Program.cs) stay the same. If a gateway sits in front, either it passes the API's CORS headers through unchanged or it answers `OPTIONS` itself. Pick one owner for CORS and test it. Per README section 7.3, inspect the real `Origin` in each host.
+3. **CORS**: the exact allowed origins in [`Program.cs`](../../src/backend/api/Program.cs) stay the same. If a gateway sits in front, either it passes the API's CORS headers through unchanged or it answers `OPTIONS` itself. Pick one owner for CORS and test it. Per README section 7.3, inspect the real `Origin` in each host.
 4. **Teams `validDomains`**: only needed for domains the Teams client must load; API hosts called with `fetch` need no listing for networking. The `staticTabs.contentUrl` domain is trusted automatically ([root object](https://learn.microsoft.com/en-us/microsoft-365/extensibility/schema/root#validdomains)).
-5. **Possible later, if tests need it:** a periodic SSE heartbeat in [`MessagesController.cs`](../../api/Controllers/MessagesController.cs) to stay under intermediary idle limits.
+5. **Possible later, if tests need it:** a periodic SSE heartbeat in [`MessagesController.cs`](../../src/backend/api/Controllers/MessagesController.cs) to stay under intermediary idle limits.
 6. **Public denial on the origin:** turn public network access off on the App Service once private routing is verified, and confirm the gateway can still reach it.
 
 ## 8. Licensing and cost caveats (no prices)

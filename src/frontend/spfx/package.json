@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "test": "node --test scripts/citation-helpers.test.mjs scripts/chat-behavior.test.mjs",
+    "test:citations": "node --test scripts/citation-helpers.test.mjs",
     "build": "heft build",
     "build:prod": "heft build --production",
-    "devbuild": "heft test && heft package-solution",
+    "devbuild": "heft test && npm run package:teams && heft package-solution",
     "start": "heft start",
-    "package": "heft package-solution --production",
+    "package": "npm run package:teams && heft package-solution --production",
+    "package:teams": "node scripts/package-teams.mjs",
     "clean": "heft clean"
   },
   "dependencies": {

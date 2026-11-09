@@ -9,6 +9,14 @@
           "manifest": "./src/webparts/helloCopilot/HelloCopilotWebPart.manifest.json"
         }
       ]
+    },
+    "chat-settings-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/chatSettings/ChatSettingsWebPart.js",
+          "manifest": "./src/webparts/chatSettings/ChatSettingsWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},

@@ -1,14 +1,9 @@
-import { makeStyles, shorthands, tokens, typographyStyles } from '@fluentui/react-components';
+import { createFocusOutlineStyle, makeStyles, shorthands, tokens, typographyStyles } from '@fluentui/react-components';
 
 const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 const column = '760px';
 
-const focusRing = {
-  ':focus-visible': {
-    outline: `${tokens.strokeWidthThick} solid ${tokens.colorStrokeFocus2}`,
-    outlineOffset: `calc(${tokens.strokeWidthThick} * -1)`
-  }
-};
+const focusRing = createFocusOutlineStyle();
 
 const enter = {
   animationName: {
@@ -53,7 +48,7 @@ export const useStyles = makeStyles({
     maxWidth: '100%',
     height: '100%',
     boxSizing: 'border-box',
-    backgroundColor: tokens.colorNeutralBackground1,
+    backgroundColor: tokens.colorNeutralBackground2,
     borderRight: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`
   },
   sidebarOverlay: {
@@ -95,9 +90,9 @@ export const useStyles = makeStyles({
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
-    gap: tokens.spacingHorizontalS,
+    gap: tokens.spacingHorizontalM,
     width: '100%',
-    minHeight: '32px',
+    minHeight: '36px',
     padding: `${tokens.spacingVerticalXS} ${tokens.spacingHorizontalS}`,
     ...shorthands.border('0'),
     borderRadius: tokens.borderRadiusLarge,
@@ -119,6 +114,17 @@ export const useStyles = makeStyles({
   navItemSelected: {
     backgroundColor: tokens.colorSubtleBackgroundSelected,
     color: tokens.colorNeutralForeground1,
+    fontWeight: tokens.fontWeightSemibold,
+    '::before': {
+      content: '""',
+      position: 'absolute',
+      left: '2px',
+      top: '8px',
+      bottom: '8px',
+      width: '3px',
+      borderRadius: tokens.borderRadiusCircular,
+      backgroundColor: tokens.colorCompoundBrandForeground1
+    },
     ':hover': {
       backgroundColor: tokens.colorSubtleBackgroundSelected,
       color: tokens.colorNeutralForeground1
@@ -126,7 +132,11 @@ export const useStyles = makeStyles({
   },
   newChatIcon: {
     display: 'inline-flex',
-    color: tokens.colorNeutralForeground1
+    color: tokens.colorBrandForeground1
+  },
+  navIcon: {
+    display: 'inline-flex',
+    color: tokens.colorNeutralForeground2
   },
   chatRow: {
     position: 'relative',
@@ -142,6 +152,12 @@ export const useStyles = makeStyles({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     paddingRight: tokens.spacingHorizontalXXL
+  },
+  chipText: {
+    minWidth: 0,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
   },
   deleteButton: {
     position: 'absolute',
@@ -194,7 +210,8 @@ export const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'center',
     gap: tokens.spacingVerticalXXL,
-    padding: `0 ${tokens.spacingHorizontalL} 12vh`
+    overflowY: 'auto',
+    padding: `${tokens.spacingVerticalL} ${tokens.spacingHorizontalL} 12vh`
   },
   greeting: {
     margin: 0,
@@ -226,7 +243,16 @@ export const useStyles = makeStyles({
     ...enter
   },
   rowUser: {
-    justifyContent: 'flex-end'
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    gap: tokens.spacingVerticalXXS
+  },
+  userSkill: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: tokens.spacingHorizontalXXS,
+    ...typographyStyles.caption1,
+    color: tokens.colorNeutralForeground3
   },
   userBubble: {
     ...typographyStyles.body1,
@@ -251,15 +277,6 @@ export const useStyles = makeStyles({
     gap: tokens.spacingHorizontalS,
     ...typographyStyles.caption1Strong,
     color: tokens.colorNeutralForeground2
-  },
-  avatar: {
-    display: 'grid',
-    placeItems: 'center',
-    width: '24px',
-    height: '24px',
-    borderRadius: tokens.borderRadiusCircular,
-    backgroundColor: tokens.colorBrandBackground2,
-    color: tokens.colorBrandForeground2
   },
   assistantText: {
     ...typographyStyles.body1,
@@ -287,6 +304,7 @@ export const useStyles = makeStyles({
       padding: `0 ${tokens.spacingHorizontalXXS}`
     },
     '& pre': {
+      position: 'relative',
       maxWidth: '100%',
       boxSizing: 'border-box',
       overflowX: 'auto',
@@ -305,6 +323,21 @@ export const useStyles = makeStyles({
       color: tokens.colorNeutralForeground2
     }
   },
+  followUps: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: tokens.spacingHorizontalS,
+    marginTop: tokens.spacingVerticalM
+  },
+  followUp: {
+    maxWidth: '100%',
+    minWidth: 0,
+    minHeight: '32px',
+    whiteSpace: 'normal',
+    overflowWrap: 'anywhere',
+    textAlign: 'start',
+    '@media (max-width: 600px)': { minHeight: '44px' }
+  },
   activity: {
     display: 'flex',
     flexDirection: 'column',
@@ -312,6 +345,7 @@ export const useStyles = makeStyles({
     gap: tokens.spacingVerticalXS
   },
   activityToggle: {
+    position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
     gap: tokens.spacingHorizontalXS,
@@ -381,6 +415,7 @@ export const useStyles = makeStyles({
   },
   composer: {
     display: 'flex',
+    flexWrap: 'wrap',
     alignItems: 'flex-end',
     minHeight: '56px',
     gap: tokens.spacingHorizontalS,
@@ -407,6 +442,42 @@ export const useStyles = makeStyles({
   composerWide: {
     maxWidth: column
   },
+  composerTop: {
+    flexBasis: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    gap: tokens.spacingHorizontalXS,
+    paddingTop: tokens.spacingVerticalXS,
+    maxHeight: '104px',
+    overflowY: 'auto',
+    scrollbarWidth: 'thin'
+  },
+  draftList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: tokens.spacingHorizontalXS
+  },
+  tagContent: {
+    maxWidth: '200px',
+    minWidth: 0,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  },
+  skillMenu: {
+    maxWidth: '360px',
+    maxHeight: '360px',
+    overflowY: 'auto',
+    overflowX: 'hidden'
+  },
+  skillDescription: {
+    display: '-webkit-box',
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    whiteSpace: 'normal'
+  },
   input: {
     flexGrow: 1,
     minWidth: 0,
@@ -424,9 +495,9 @@ export const useStyles = makeStyles({
     fontSize: tokens.fontSizeBase300,
     lineHeight: tokens.lineHeightBase300,
     scrollbarWidth: 'thin',
-    '::placeholder': { color: tokens.colorNeutralForeground2, opacity: 1 },
+    '::placeholder': { color: tokens.colorNeutralForeground4, opacity: 1 },
     '@media (forced-colors: active)': {
-      '::placeholder': { color: 'CanvasText' }
+      '::placeholder': { color: 'GrayText' }
     }
   },
   visuallyHidden: {
@@ -437,5 +508,190 @@ export const useStyles = makeStyles({
     overflow: 'hidden',
     clip: 'rect(0 0 0 0)',
     whiteSpace: 'nowrap'
+  },
+
+  attachButton: {
+    flexShrink: 0,
+    alignSelf: 'flex-end',
+    marginBottom: '4px',
+    marginLeft: `calc(${tokens.spacingHorizontalS} * -1)`
+  },
+  composerLoading: {
+    margin: '0 auto'
+  },
+
+  documentErrors: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: tokens.spacingVerticalS,
+    marginBottom: tokens.spacingVerticalM
+  },
+
+  setPill: {
+    flexShrink: 0,
+    gap: tokens.spacingHorizontalXS,
+    '&[aria-expanded="true"]': {
+      ...shorthands.borderColor(tokens.colorCompoundBrandStroke),
+      boxShadow: `0 0 0 1px ${tokens.colorCompoundBrandStroke} inset`
+    }
+  },
+  iconStack: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '2px'
+  },
+  setSurface: {
+    width: 'min(380px, calc(100vw - 32px))',
+    padding: 0,
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  setHeading: {
+    ...typographyStyles.body1Strong,
+    margin: 0,
+    padding: `${tokens.spacingVerticalM} ${tokens.spacingHorizontalL} ${tokens.spacingVerticalXS}`
+  },
+  setEmpty: {
+    ...typographyStyles.caption1,
+    color: tokens.colorNeutralForeground3,
+    margin: 0,
+    padding: `0 ${tokens.spacingHorizontalL} ${tokens.spacingVerticalS}`
+  },
+  setList: {
+    listStyleType: 'none',
+    margin: 0,
+    padding: `0 0 ${tokens.spacingVerticalXS}`,
+    maxHeight: '320px',
+    overflowY: 'auto'
+  },
+  setItem: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: tokens.spacingHorizontalS,
+    padding: `${tokens.spacingVerticalS} ${tokens.spacingHorizontalS} ${tokens.spacingVerticalS} ${tokens.spacingHorizontalL}`
+  },
+  setText: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    minWidth: 0
+  },
+  setName: {
+    ...typographyStyles.body1Strong,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  },
+  setMeta: {
+    ...typographyStyles.caption1,
+    color: tokens.colorNeutralForeground3
+  },
+  setFoot: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: tokens.spacingVerticalS,
+    padding: `${tokens.spacingVerticalM} ${tokens.spacingHorizontalL}`,
+    borderTop: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
+    backgroundColor: tokens.colorNeutralBackground2,
+    borderBottomLeftRadius: tokens.borderRadiusMedium,
+    borderBottomRightRadius: tokens.borderRadiusMedium,
+    ...typographyStyles.caption1,
+    color: tokens.colorNeutralForeground2
+  },
+  eventDivider: {
+    ...typographyStyles.caption1,
+    color: tokens.colorNeutralForeground3
+  },
+  inlineCitation: {
+    position: 'relative',
+    display: 'inline',
+    font: 'inherit',
+    color: tokens.colorBrandForegroundLink,
+    backgroundColor: tokens.colorBrandBackground2,
+    ...shorthands.border('0'),
+    borderRadius: tokens.borderRadiusSmall,
+    padding: `0 ${tokens.spacingHorizontalXXS}`,
+    cursor: 'pointer',
+    ':hover': { textDecorationLine: 'underline' },
+    ...focusRing
+  },
+  citationArea: {
+    marginTop: tokens.spacingVerticalS,
+    overflowWrap: 'anywhere'
+  },
+  citationList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: tokens.spacingHorizontalXS,
+    '& button': { maxWidth: '100%', textAlign: 'start', overflowWrap: 'anywhere' }
+  },
+  citationEvidence: {
+    marginTop: tokens.spacingVerticalS,
+    padding: tokens.spacingHorizontalM,
+    backgroundColor: tokens.colorNeutralBackground2,
+    borderRadius: tokens.borderRadiusMedium,
+    ...shorthands.border(tokens.strokeWidthThin, 'solid', tokens.colorNeutralStroke2),
+    ...focusRing
+  },
+  citationTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: tokens.spacingHorizontalS,
+    marginBottom: tokens.spacingVerticalXS
+  },
+  citationQuote: {
+    margin: `${tokens.spacingVerticalS} 0`,
+    padding: 0,
+    whiteSpace: 'pre-wrap',
+    maxHeight: '280px',
+    overflowY: 'auto'
+  },
+  retrievalAccordion: {
+    marginTop: tokens.spacingVerticalXS
+  },
+  retrievalHeader: {
+    '& button': {
+      paddingLeft: 0,
+      paddingRight: tokens.spacingHorizontalXS,
+      minHeight: '28px',
+      color: tokens.colorNeutralForeground3,
+      ...typographyStyles.caption1Strong
+    }
+  },
+  retrievalDetails: {
+    margin: 0,
+    color: tokens.colorNeutralForeground2,
+    ...typographyStyles.caption1,
+    '& dl': { margin: `${tokens.spacingVerticalXXS} 0` },
+    '& dt': { fontWeight: tokens.fontWeightSemibold },
+    '& dd': { marginLeft: 0, marginBottom: tokens.spacingVerticalXS }
+  },
+
+  pickerSurface: {
+    width: 'min(1080px, 96vw)',
+    maxWidth: 'min(1080px, 96vw)',
+    padding: tokens.spacingHorizontalM
+  },
+  pickerBody: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  pickerContent: {
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: tokens.spacingVerticalS,
+    height: 'min(680px, 75vh)',
+    padding: 0
+  },
+  pickerSpinner: {
+    position: 'absolute',
+    inset: 0
+  },
+  pickerFrame: {
+    flexGrow: 1,
+    width: '100%',
+    ...shorthands.border('0')
   }
 });

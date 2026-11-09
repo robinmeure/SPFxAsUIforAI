@@ -1,4 +1,4 @@
-# --- .NET (api/) ---
+# --- .NET (src/backend/api/) ---
 bin/
 obj/
 publish/
@@ -6,19 +6,20 @@ publish.zip
 *.user
 .vs/
 
-# --- Node / SPFx (spfx/) ---
+# --- Node / SPFx (src/frontend/spfx/) ---
 node_modules/
-spfx/dist/
-spfx/lib/
-spfx/lib-commonjs/
-spfx/lib-dts/
-spfx/lib-esm/
-spfx/release/
-spfx/temp/
-spfx/jest-output/
-spfx/sharepoint/solution/
-spfx/.heft/
-spfx/.inspect-package/
+src/frontend/spfx/dist/
+src/frontend/spfx/lib/
+src/frontend/spfx/lib-commonjs/
+src/frontend/spfx/lib-dts/
+src/frontend/spfx/lib-esm/
+src/frontend/spfx/release/
+src/frontend/spfx/temp/
+src/frontend/spfx/jest-output/
+src/frontend/spfx/sharepoint/solution/
+src/frontend/spfx/.heft/
+src/frontend/spfx/.inspect-package/
+src/frontend/spfx/teams/TeamsSPFxApp.zip
 *.sppkg
 npm-debug.log*
 

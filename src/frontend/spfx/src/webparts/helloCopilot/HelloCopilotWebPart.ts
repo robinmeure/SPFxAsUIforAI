@@ -6,14 +6,17 @@ import { ThemeChangedEventArgs, ThemeProvider } from '@microsoft/sp-component-ba
 import { IPropertyPaneConfiguration, PropertyPaneTextField } from '@microsoft/sp-property-pane';
 import { Theme, teamsDarkTheme, teamsHighContrastTheme, teamsLightTheme, webDarkTheme, webLightTheme } from '@fluentui/react-components';
 import { HelloCopilot } from './components/HelloCopilot';
+import { API_SETTINGS_STORAGE_KEY, applyApiSettings } from '../../common/apiSettings';
 
-export interface IHelloCopilotWebPartProps { apiUrl: string; apiScope: string; apiResource: string; }
+export interface IHelloCopilotWebPartProps { apiUrl: string; apiScope: string; apiResource: string; companionBaseUrl?: string; }
 
 const teamsThemes: Record<string, Theme> = { dark: teamsDarkTheme, contrast: teamsHighContrastTheme };
 
 export default class HelloCopilotWebPart extends BaseClientSideWebPart<IHelloCopilotWebPartProps> {
   private _theme: Theme = webLightTheme;
   private _themeProvider: ThemeProvider | undefined;
+  // A Teams personal app has no property pane; its Settings tab saves overrides to localStorage instead.
+  private _isPersonalApp = false;
 
   protected async onInit(): Promise<void> {
     await super.onInit();
@@ -25,6 +28,8 @@ export default class HelloCopilotWebPart extends BaseClientSideWebPart<IHelloCop
       };
       try {
         const teamsContext = await teamsJs.app.getContext();
+        this._isPersonalApp = !teamsContext.team && !teamsContext.channel && !teamsContext.chat;
+        if (this._isPersonalApp) window.addEventListener('storage', this._onStorage);
         setTeamsTheme(teamsContext.app.theme);
         teamsJs.app.registerOnThemeChangeHandler(setTeamsTheme);
         return;
@@ -38,12 +43,14 @@ export default class HelloCopilotWebPart extends BaseClientSideWebPart<IHelloCop
   }
 
   public render(): void {
+    const properties = this._isPersonalApp ? applyApiSettings(this.properties) : this.properties;
     ReactDom.render(React.createElement(HelloCopilot, {
-      context: this.context, theme: this._theme, isTeams: !!this.context.sdks.microsoftTeams, ...this.properties
+      context: this.context, theme: this._theme, isTeams: !!this.context.sdks.microsoftTeams, ...properties
     }), this.domElement);
   }
 
   protected onDispose(): void {
+    window.removeEventListener('storage', this._onStorage);
     this._themeProvider?.themeChangedEvent.remove(this, this._onThemeChanged);
     ReactDom.unmountComponentAtNode(this.domElement);
   }
@@ -54,11 +61,16 @@ export default class HelloCopilotWebPart extends BaseClientSideWebPart<IHelloCop
     return {
       pages: [{ header: { description: 'Configuration' }, groups: [{ groupName: 'Mock API', groupFields: [
         PropertyPaneTextField('apiUrl', { label: 'API HTTPS URL' }),
+        PropertyPaneTextField('companionBaseUrl', { label: 'Companion base URL (optional)', description: 'For custom stream paths: base URL for saved chats, documents and skills, on the same origin.' }),
         PropertyPaneTextField('apiResource', { label: 'API resource (Application ID URI)' }),
         PropertyPaneTextField('apiScope', { label: 'Delegated scope' })
       ] }] }]
     };
   }
+
+  private _onStorage = (e: StorageEvent): void => {
+    if (e.key === API_SETTINGS_STORAGE_KEY || e.key === null) this.render();
+  };
 
   private _onThemeChanged(args: ThemeChangedEventArgs): void {
     this._applySharePointTheme(args.themeV2, args.theme?.isInverted);

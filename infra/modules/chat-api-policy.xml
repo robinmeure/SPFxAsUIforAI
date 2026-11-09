@@ -1,0 +1,54 @@
+<!-- Chat API policy. Named values ({{...}}) are set by apim.bicep; __ALLOWED_ORIGINS__ is replaced at deploy time. -->
+<policies>
+  <inbound>
+    <base />
+    <cors allow-credentials="false" terminate-unmatched-request="true">
+      <allowed-origins>__ALLOWED_ORIGINS__</allowed-origins>
+      <allowed-methods preflight-result-max-age="300">
+        <method>GET</method>
+        <method>POST</method>
+        <method>DELETE</method>
+      </allowed-methods>
+      <allowed-headers>
+        <header>authorization</header>
+        <header>content-type</header>
+        <header>accept</header>
+      </allowed-headers>
+    </cors>
+    <validate-azure-ad-token tenant-id="{{tenant-id}}" header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Unauthorized" output-token-variable-name="jwt">
+      <audiences>
+        <audience>{{api-client-id}}</audience>
+        <audience>api://{{api-client-id}}</audience>
+      </audiences>
+    </validate-azure-ad-token>
+    <!-- Delegated user tokens only: app-only tokens have no scp claim. -->
+    <choose>
+      <when condition="@(!((Jwt)context.Variables["jwt"]).Claims.GetValueOrDefault("scp", "").Split(' ').Contains("access_as_user"))">
+        <return-response>
+          <set-status code="403" reason="Forbidden" />
+        </return-response>
+      </when>
+    </choose>
+    <rate-limit-by-key calls="{{chat-calls-per-minute}}" renewal-period="60" counter-key="@(((Jwt)context.Variables["jwt"]).Claims.GetValueOrDefault("oid", "anonymous"))" />
+    <set-header name="X-Correlation-ID" exists-action="skip">
+      <value>@(context.RequestId.ToString())</value>
+    </set-header>
+    <!-- APIM owns CORS at the edge. Without an Origin header the API's own CORS layer adds no second set of headers. -->
+    <set-header name="Origin" exists-action="delete" />
+    <!-- Dev tunnels show an interstitial page to browser-like callers; skip it for gateway traffic. -->
+    <set-header name="X-Tunnel-Skip-AntiPhishing-Page" exists-action="override">
+      <value>true</value>
+    </set-header>
+    <set-backend-service backend-id="chat-api" />
+  </inbound>
+  <backend>
+    <!-- Stream Server-Sent Events chunk by chunk. -->
+    <forward-request buffer-response="false" timeout="{{chat-timeout-seconds}}" />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>

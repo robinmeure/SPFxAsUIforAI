@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.17",
+  "id": "f4c41a4f-b0a7-4d3c-bb25-8457a9fd0a68",
+  "version": "1.0.0",
+  "developer": {
+    "name": "Hello Copilot",
+    "websiteUrl": "https://github.com/robinmeure/SPFxAsUIforAI",
+    "privacyUrl": "https://github.com/robinmeure/SPFxAsUIforAI",
+    "termsOfUseUrl": "https://github.com/robinmeure/SPFxAsUIforAI"
+  },
+  "name": { "short": "Hello Copilot", "full": "Hello Copilot" },
+  "description": {
+    "short": "Streaming chat over your documents",
+    "full": "Chat with an AI assistant that answers from your SharePoint and uploaded documents."
+  },
+  "icons": {
+    "outline": "f4c41a4f-b0a7-4d3c-bb25-8457a9fd0a68_outline.png",
+    "color": "f4c41a4f-b0a7-4d3c-bb25-8457a9fd0a68_color.png"
+  },
+  "accentColor": "#004578",
+  "staticTabs": [
+    {
+      "entityId": "chat",
+      "name": "Chat",
+      "contentUrl": "https://{teamSiteDomain}/_layouts/15/TeamsLogon.aspx?SPFX=true&dest=/_layouts/15/teamshostedapp.aspx%3Fteams%26personal%26componentId=f4c41a4f-b0a7-4d3c-bb25-8457a9fd0a68%26forceLocale={locale}",
+      "scopes": ["personal"]
+    },
+    {
+      "entityId": "settings",
+      "name": "Settings",
+      "contentUrl": "https://{teamSiteDomain}/_layouts/15/TeamsLogon.aspx?SPFX=true&dest=/_layouts/15/teamshostedapp.aspx%3Fteams%26personal%26componentId=4a51e7ae-5a4e-434b-81b3-a9e6445559c3%26forceLocale={locale}",
+      "scopes": ["personal"]
+    }
+  ],
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://{teamSiteDomain}{teamSitePath}/_layouts/15/TeamsLogon.aspx?SPFX=true&dest={teamSitePath}/_layouts/15/teamshostedapp.aspx%3FopenPropertyPane=true%26teams%26componentId=f4c41a4f-b0a7-4d3c-bb25-8457a9fd0a68%26forceLocale={locale}",
+      "canUpdateConfiguration": true,
+      "scopes": ["team", "groupChat"]
+    }
+  ],
+  "permissions": ["identity"],
+  "validDomains": [
+    "*.login.microsoftonline.com",
+    "*.sharepoint.com",
+    "*.sharepoint-df.com",
+    "spoppe-a.akamaihd.net",
+    "spoprod-a.akamaihd.net",
+    "resourceseng.blob.core.windows.net",
+    "msft.spoppe.com"
+  ],
+  "webApplicationInfo": {
+    "resource": "https://{teamSiteDomain}",
+    "id": "00000003-0000-0ff1-ce00-000000000000"
+  }
+}

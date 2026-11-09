@@ -56,11 +56,11 @@ Current controls, taken from the repository:
 
 | Control | Where |
 |---|---|
-| Entra ID JWT validation (`Microsoft.Identity.Web`) and policy `AccessAsUser`, which requires scope `access_as_user` on every controller | [Program.cs](../../api/Program.cs) |
-| CORS with an exact list of allowed origins (SharePoint tenant, Teams, local workbench) | [Program.cs](../../api/Program.cs), [appsettings.json](../../api/appsettings.json) |
-| System-assigned managed identity to Search and Foundry; no keys in configuration | [Program.cs](../../api/Program.cs) |
-| Generic error message with a trace reference. Exception details are not streamed to the client. | [MessagesController.cs](../../api/Controllers/MessagesController.cs) |
-| IdentityModel PII logging only possible in Development, behind an explicit switch | [Program.cs](../../api/Program.cs) |
+| Entra ID JWT validation (`Microsoft.Identity.Web`) and policy `AccessAsUser`, which requires scope `access_as_user` on every controller | [Program.cs](../../src/backend/api/Program.cs) |
+| CORS with an exact list of allowed origins (SharePoint tenant, Teams, local workbench) | [Program.cs](../../src/backend/api/Program.cs), [appsettings.json](../../src/backend/api/appsettings.json) |
+| System-assigned managed identity to Search and Foundry; no keys in configuration | [Program.cs](../../src/backend/api/Program.cs) |
+| Generic error message with a trace reference. Exception details are not streamed to the client. | [MessagesController.cs](../../src/backend/api/Controllers/MessagesController.cs) |
+| IdentityModel PII logging only possible in Development, behind an explicit switch | [Program.cs](../../src/backend/api/Program.cs) |
 
 ### 2.2 In scope
 
@@ -578,7 +578,7 @@ Alerts to define:
 | 6 | Point `apiUrl` to the APIM gateway URL. Keep `apiResource` unchanged. **Update every placed web part instance**, because saved properties override manifest defaults. | SPFx | Configuration |
 | 7 | Keep the API's JWT validation and CORS. Keep the API audience unchanged. | API | None |
 | 8 | Add a startup guard that refuses to start when `UseMockAuthentication` or `UseMockResponses` is `true` outside Development (T14). | API | Small code change |
-| 9 | If PoC test 10 fails: add a periodic SSE heartbeat (comment line) in [MessagesController.cs](../../api/Controllers/MessagesController.cs) to stay below intermediary idle limits. | API | Conditional code change |
+| 9 | If PoC test 10 fails: add a periodic SSE heartbeat (comment line) in [MessagesController.cs](../../src/backend/api/Controllers/MessagesController.cs) to stay below intermediary idle limits. | API | Conditional code change |
 | 10 | Move deployments to a path that can reach the private App Service. When public access is disabled, the SCM/Kudu endpoint becomes private as well. Use a self-hosted or VNet-connected build agent, or a deployment method that does not need SCM access **[verify]**. | CI/CD | Pipeline |
 | 11 | Option B only: deploy Front Door Premium with WAF and lock APIM to it. | Azure | Infrastructure |
 | 12 | Assign Azure Policy definitions that deny public network access on App Service, Search and Foundry in this scope. | Governance | Policy |

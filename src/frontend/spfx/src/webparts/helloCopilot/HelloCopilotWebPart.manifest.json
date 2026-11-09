@@ -14,6 +14,6 @@
     "title": { "default": "Hello Copilot" },
     "description": { "default": "Streaming mock chat API sample" },
     "officeFabricIconFontName": "Chat",
-    "properties": { "apiUrl": "https://localhost:7198/api/messages/stream", "apiScope": "api://1c389841-5b43-4575-8acb-8135d21ca809/access_as_user", "apiResource": "api://1c389841-5b43-4575-8acb-8135d21ca809" }
+    "properties": { "apiUrl": "https://localhost:7198/api/messages/stream", "companionBaseUrl": "", "apiScope": "api://1c389841-5b43-4575-8acb-8135d21ca809/access_as_user", "apiResource": "api://1c389841-5b43-4575-8acb-8135d21ca809" }
   }]
 }

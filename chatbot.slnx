@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/apphost/">
+    <Project Path="src/apphost/Chatbot.AppHost.csproj" />
+  </Folder>
+  <Folder Name="/src/backend/">
+    <Project Path="src/backend/api.Tests/api.Tests.csproj" />
+    <Project Path="src/backend/api/api.csproj" />
+  </Folder>
+  <Folder Name="/src/backend/servicedefaults/">
+    <Project Path="src/backend/servicedefaults/Chatbot.ServiceDefaults.csproj" />
+  </Folder>
+</Solution>
