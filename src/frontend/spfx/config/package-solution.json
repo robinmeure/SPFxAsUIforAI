@@ -3,7 +3,7 @@
   "solution": {
     "name": "hello-copilot-client-side-solution",
     "id": "64e67e8d-55cb-4dd0-a09b-a3be5db9b612",
-    "version": "1.0.0.0",
+    "version": "1.0.0.1",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,

@@ -20,6 +20,12 @@ npm run package
 
 The local development and production API/app-registration values are configured in the API and web-part manifest. Before deployment, set the real SharePoint tenant origin and API URL, and approve `access_as_user` under SharePoint Admin Center > Advanced > API access.
 
+The checked-in chat manifest defaults to the deployed APIM gateway, not localhost.
+This works with the Aspire API on port 5198 through its dev tunnel; the API and
+tunnel must stay running. For direct local HTTPS testing, override the URL in the
+SharePoint property pane to `https://localhost:7198/api/messages/stream` and start
+the API's `https` launch profile.
+
 ## Endpoint configuration and validation
 
 `apiUrl` is the exact streaming destination: its path, trailing slash and query
@@ -48,6 +54,16 @@ and `npm run build` for TypeScript/webpack validation.
 The repo provides its own Teams app manifest in `teams/manifest.json`: a personal app with a **Chat** tab and a **Settings** tab, plus a configurable channel/group-chat tab that uses the property pane. `npm run package` first runs `npm run package:teams`, which zips the manifest and the two icons (`teams/<web-part-id>_color.png` and `_outline.png`) into `teams/TeamsSPFxApp.zip`; SharePoint deploys that package on **Sync to Teams**. Bump the manifest `version` whenever you change it. See section 6.4 of the root README.
 
 The **Settings** tab is the `chatSettings` web part (`supportedHosts: []`, so it only appears there). It saves the API URL, resource and scope to `localStorage` (per user and device), and the chat web part applies them only when it runs in the personal app.
+
+SharePoint page settings are not copied into Teams. If an existing Teams app calls
+`https://localhost:7198`, set its API HTTPS URL to
+`https://apim-chatbot-iexw25savj4vg.azure-api.net/chat/api/messages/stream`:
+use the personal app's **Settings** tab, or the channel/group-chat tab's
+**Settings** property pane. Leave the companion base URL empty for this conventional
+stream path (clear any saved localhost companion URL). After deploying the updated
+package, **Reset to defaults** also restores APIM in the personal app. A connection
+refusal happens before HTTP/CORS; adding Teams origins or API domains to the Teams
+manifest cannot make a missing localhost listener reachable.
 
 Stop any running `npm run start` / `heft start` watcher (including the Aspire AppHost) before building a release; it shares the output folders and can introduce development assets during packaging.
 
